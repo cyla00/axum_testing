@@ -13,7 +13,6 @@ use uuid::{Builder, Variant, Version};
 async fn main() {
     // build our application with a route
     let app = Router::new()
-        .route("/", get(root))
         .route("/users", post(create_user));
 
     // run our app with hyper
@@ -23,10 +22,6 @@ async fn main() {
         .serve(app.into_make_service())
         .await
         .unwrap();
-}
-
-async fn root() -> &'static str {
-    "Hello, World!"
 }
 
 async fn create_user(Json(payload): Json<CreateUser>) -> impl IntoResponse {
